@@ -1,11 +1,17 @@
 # https://git-scm.com/docs/gitattributes
 # https://help.github.com/articles/dealing-with-line-endings/
+
+###############################################################################
+# Set default behavior to automatically normalize line endings.
+###############################################################################
 * text=auto
 
-*.jpg binary
-*.png binary
-*.gif binary
-
+###############################################################################
+# Set default behavior for command prompt diff.
+#
+# This is need for earlier builds of msysgit that does not have it on by
+# default for csharp files.# Note: This is only used by command line
+###############################################################################
 *.c text=auto
 *.cpp text=auto
 *.cxx text=auto
@@ -21,6 +27,23 @@
 *.htm text=auto
 *.css text=auto
 
+###############################################################################
+# behavior for image files
+#
+# image files are treated as binary by default.
+###############################################################################
+*.jpg binary
+*.png binary
+*.gif binary
+
+
+###############################################################################
+# diff behavior for common document formats
+# 
+# Convert binary document formats to text before diffing them. This feature
+# is only available from the command line. Turn it on by uncommenting the 
+# entries below.
+###############################################################################
 *.doc  diff=astextplain
 *.DOC	diff=astextplain
 *.docx	diff=astextplain
