@@ -1,5 +1,6 @@
 # Coding Convention
-## C/C++ : clang-format (https://clang.llvm.org/docs/ClangFormat.html)
+## C/C++ 
+### clang-format (https://clang.llvm.org/docs/ClangFormat.html)
 We use clang-format with 2 indentation to maintain coding convention.
 clang-format support VIM and EMACS editor. Even 2 is the default indentation,
 you can change the it in $(HOME)/.clang-format file. The below coding
@@ -21,7 +22,7 @@ Please, refer to http://releases.llvm.org/3.9.0/tools/clang/docs/ClangFormatStyl
 
 ## Python
 
-**Formatter yapf (https://github.com/google/yapf)**
+### Formatter yapf (https://github.com/google/yapf)**
 
 We use yapf as a formatter for python files.
 It changes the python files according to the defined style in ~/.config/yapf/style file.
@@ -37,7 +38,7 @@ split\_before\_logical\_operator = true
 $ yapf -i *.py
 ```
 
-**Checker pylint (https://www.pylint.org)**
+### Checker pylint (https://www.pylint.org)**
 
 Pylint is a source code, bug and quality checker for the Python programming language. It follows the style recommended by PEP 8, the Python style guide.
 To check a python file with pylint:
@@ -48,7 +49,8 @@ $ pylint your_file.py
 Then, modify incorrect statements that are checked by pylint.
 ```
 
-## PHP: PHP_Beautifier (https://github.com/clbustos/PHP_Beautifier)
+## PHP
+### PHP_Beautifier (https://github.com/clbustos/PHP_Beautifier)
 This program reformat and beautify PHP 4 and PHP 5 source code files automatically. It is written in PHP 5 and has a command line tool
 
 ```bash
