@@ -322,4 +322,4 @@ indent-after-paren=4
 [SAMSUNG LINES]
 
 # Regexp for a proper copyright notice.
-copyright=Copyright \d{4} The NPU Compiler Authors\. +All [Rr]ights [Rr]eserved\.
+copyright=Copyright \d{4} The Project Repository Authors\. +All [Rr]ights [Rr]eserved\.
