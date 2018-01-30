@@ -1,0 +1,37 @@
+language: cpp
+fast_finish: true
+
+os:
+  - linux
+  - osx
+  
+env: 
+  - FC=gfortran-7
+
+dist: trusty
+group: edge
+
+notifications:
+  email: false
+
+git:
+  depth: 3
+
+addons:
+  apt:
+    sources: ['ubuntu-toolchain-r-test']
+    packages: ['gfortran-7','libboost-filesystem-dev','libboost-program-options-dev']
+
+before_install:
+  - if [[ $TRAVIS_OS_NAME == osx ]]; then
+      brew update;
+      brew install gcc;
+      export FC=gfortran;
+    fi
+
+install: 
+    - cd bin
+    - cmake ..
+    
+script:
+    - make
