@@ -1,6 +1,6 @@
 ---
 name: Support Request
-about: Report a problem with https://build.opensuse.org
+about: Report a problem with our project source code
 
 ---
 
