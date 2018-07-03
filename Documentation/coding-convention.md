@@ -1,32 +1,48 @@
+
 # Coding Convention
-## C/C++ 
+
+ROS Application follows [Google Style Guide](https://google.github.io/styleguide/cppguide.html) for coding convention. 
+A few rules might be ignored depending on modules. For the full list of ignored rules, please see the following link:
+- http://suprem.sec.samsung.net/confluence/display/SWCSAITTFC/Coding+Convention
+
+## C/C++
+When you push your commits, ALWAYS run clang-format & cpplint to submit a commit with style change. If there is a change due to code style issues, make two separate commits: (Please do not include other codes' style change in the same commit)
+- commit with style change only (i.e., commit clang-formatted original code - not your code change)
+- commit with your code change only (i.e., contents only).
+
 ### clang-format (https://clang.llvm.org/docs/ClangFormat.html)
-We use clang-format with 2 indentation to maintain coding convention.
-clang-format support VIM and EMACS editor. Even 2 is the default indentation,
-you can change the it in $(HOME)/.clang-format file. The below coding
-standards is derived from the LLVM style.
-
-We are using clang-format-3.9, because current .clang-format is based on 3.9.
-```bash
-$ cd .../<your-repository>/
-$ sudo apt-get install clang-format-3.9
-$ clang-format --help
-```
-
-If you want to format multiple file types using a config file, you can run as following:
-```bash
-$ clang-format -i *.cpp *.h *.hpp
-```
-
+clang-format automatically formats your code.
 Please, refer to http://releases.llvm.org/3.9.0/tools/clang/docs/ClangFormatStyleOptions.html for more details.
+1. Install the latest clang-format (>= 3.8)
+```bash
+$ sudo apt-cache search clang-format
+$ sudo apt-get install -y clang-format-XX.XX
+```
+2. Copy clang-format file from AuDri/ROS/catkin/style/.clang-format to your caktin workspace (catkin_ws), or copy .clang-format to root path of source code.
+3. Run clang-format with --style=File option:
+```bash
+$ clang-format-XX.XX -i --style=File [my_source_code_file]
+or 
+$ find . -name '*.h' -or -name '*.hpp' -or -name '*.cpp' | xargs clang-format-XX.XX -i -style=file $1
+```
+
+### cpplint (https://github.com/cpplint/cpplint)
+cpplint is a static C++ style checker following Google's C++ style guide. cpplint for ROS modules is available at AuDri/ROS/catkin/style/cpplint.py.
+
+1. Directly run it with:
+```bash
+$ python cpplint.py [file_path]
+or
+$ find . -name '*.h' -or -name '*.hpp' -or -name '*.cpp' | xargs python cpplint.py $1
+```
 
 ## Python
 
-### Formatter yapf (https://github.com/google/yapf)**
+### Formatter yapf (https://github.com/google/yapf)
 
 We use yapf as a formatter for python files.
 It changes the python files according to the defined style in ~/.config/yapf/style file.
-we use pep 8. We use style config as below. You can use yapf with PIP.
+We use pep 8. We use style config as below. You can use yapf with PIP.
 
 ```bash
 $ sudo pip install --proxy=http://10.112.1.184:8080 yapf
@@ -38,15 +54,16 @@ split\_before\_logical\_operator = true
 $ yapf -i *.py
 ```
 
-### Checker pylint (https://www.pylint.org)**
+### Checker pylint (https://www.pylint.org)
 
 Pylint is a source code, bug and quality checker for the Python programming language. It follows the style recommended by PEP 8, the Python style guide.
 To check a python file with pylint:
 ```bash
 $ sudo pip install --proxy=http://10.112.1.184:8080 pylint
-$ cd .../<your-repository>/ ; cp ./.pylintrc ~/
+$ cd AuDri
+$ cp ROS/catkin/style/.pylintrc ~/
 $ pylint your_file.py
-Then, modify incorrect statements that are checked by pylint.
+Then, modify incorrect statements that are checked by pylint before submitting your PR.
 ```
 
 ## PHP
@@ -57,3 +74,4 @@ This program reformat and beautify PHP 4 and PHP 5 source code files automatical
 $ sudo apt-get install php-pear
 $ sudo pear install PHP_Beautifier-0.1.15
 ```
+
