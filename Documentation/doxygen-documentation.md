@@ -4,8 +4,7 @@ Doxygen: Generate documentation from source code
 
 Doxygen is the de facto regular tool for generating documentation from annotated C++ sources, however, it additionally supports different well-known programming languages akin to C, objective-C, C#, Hypertext Preprocessor, Java, Python, IDL (Corba, Microsoft, and UNO/OpenOffice flavors), Fortran, VHDL and Tcl.
 
-Install doxygen & graphviz
------------------------------
+# Install doxygen & graphviz
 * If you want to run [Doxygen](http://www.stack.nl/~dimitri/doxygen/) to
   produce documentation from your code comments, then in addition do the following:
   * Install [Doxygen](http://www.stack.nl/~dimitri/doxygen/) using the
@@ -22,91 +21,253 @@ Install doxygen & graphviz
     $ sudo apt-get install graphviz
     ```
 
-How to generate documentation from source code
------------------------------------------------
-* Three parts are documented with doxygen: `compiler`, `ncp` and `ci`
+# How to generate documentation from source code
 * If you want to automatically generate documentation from source code in Linux by using doxygen, proceed as follows:
 
     ```
-    # below are in relative of <git_repository> folder
-    $ cd ./<git_repository>
-
-    # for compiler
-    $ cd ./compiler
-    $ doxygen ../Doxyfile.compiler
-
-    # for FS
-    $ cd ./ncp
-    $ doxygen ../Doxyfile.ncp
-
-    # for ci
-    $ cd ./ci
-    $ doxygen ../Doxyfile.ci
+    # for src app
+    $ cd ./gst
+    $ doxygen ../Doxyfile.prj # from https://github.sec.samsung.net/STAR/dragonfly-CI/blob/tizen/ci/Doxyfile.prj
 
     # launch with the browser to view the results
     $ chromium-browser ./html/index.html
-    $ firefox ./html/index.html
     ```
 
-How to comment
---------------------
-***Comments for Files***
+# How to comment
+### Comments for Files
 
 Each file needs to begin with the `@file` command stating the name of the file. This should be followed by a brief description of the file using the `@brief` command. If necessary, you can follow this with a more detailed description. Next you should put your name and andrew id, along with your partners name and andrew id, using the `@author` tag. This needs to be followed with a bugs section with a list of known bugs using the `@bug` command. If there are no known bugs, explicitly state that using the `@bug` command.
 
-***Comments for Functions and Data Structures***
+### Comments for Functions and Data Structures
 
 Before each function, data structure, and macro you should put a comment block giving at least a brief description using the `@brief` command. A brief description will suffice for your data structures but for your macros and functions you will need to use a few more commands. After your description, you should use the `@param` command to describe all of the parameters to your function. These descriptions should be followed by a description of the return value using the `@return` command. Note: When we say "each" function, that is not a strong statement. You can leave out simple helper functions, like a max() macro, so you do not waste time.
 
-***Case study***
+# Case study
 
+### Case study: C/C++
+- https://www.stack.nl/~dimitri/doxygen/manual/docblocks.html#cppblock
+
+You have to use comments starting with ** and then the special command.
+
+* C/C++ file doxygen entries:
 ```bash
-/** @file    mysource.c
- *  @brief   A core engine of my source.
- *
- *  These empty function definitions are provided
- *  so that stdio will build without complaining.
- *  You will need to fill these functions in. This
- *  is the implementation of the my source code.
- *  Important details about its implementation
- *  should go in these comments.
- *
- *  @date    1 Jun 2017
- *  @param   [in] repeat number of times to do nothing
- *  @param   [out] repeat number of times to do nothing 
- *  @retval  TRUE Successfully did nothing.
- *  @retval  FALSE Oops, did something.
- *  @bug     No know bugs.
- *  @todo    Make it do something.
- *  @see     http://github.sec.samsung.com/RS7-STAR
- *
- *  Example Usage:
- *  @code
- *    example_mycall(3); // Do nothing 3 times.
- *  @endcode
+/**
+ * "THE BEER-WARE LICENSE" (Revision 42):
+ * <phk@FreeBSD.ORG> wrote this file.  As long as you retain this notice you
+ * can do whatever you want with this stuff. If we meet some day, and you think
+ * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  */
+
+/**
+ * @file   taos_struct.c
+ * @author Gildong Hong <gildong.hong@samsung.com>
+ * @date   1/18/2018
+ * @brief  A dragonfly driver.
+ *
+ * These empty function definitions are provided
+ * so that stdio will build without complaining.
+ * You will need to fill these functions in. This
+ * is the implementation of the dragonfly device driver.
+ * Important details about its implementation
+ * should go in these comments.
+ *
+ * @bug     No know bugs.
+ * @todo    Make it do something.
+ */
+int main(void){
+   taos_base_initialize();
+   taos_frame_run();
+   return 0;
+}
 ```
+
+* C/C++ function doxygen entries:
+```bash
+/**
+ * @brief	Initialize ring buffer
+ * @param	RingBuff	: Pointer to ring buffer to initialize
+ * @param	buffer		: Pointer to buffer to associate with RingBuff
+ * @param	itemSize	: Size of each buffer item size
+ * @param	count		: Size of ring buffer
+ * @note	Memory pointed by a buffer must have correct alignment of
+ * 			a itemSize, and a count must be a power of 2 and must at
+ * 			least be 2 or greater.
+ * @return	Nothing
+ */
+int RingBuffer_Init(RINGBUFF_T *RingBuff, void *buffer, int itemSize, int count);
+```
+
+* C/C++ struct/class doxygen entries:
+```bash
+/**
+ * @def		RB_VHEAD(rb)
+ * volatile typecasted head index
+ */
+#define RB_VHEAD(rb)              (*(volatile uint32_t *) &(rb)->head)
+
+/**
+ * @brief ring buffer structure
+ */
+typedef struct {
+    void *memBuf; /**<A void * pointing to memory of size bufSize.*/
+    size_t filePos; /**<Current position inside the file.*/
+    size_t bufPos; /**<Curent position inside the buffer.*/
+    size_t bufSize; /**<The size of the buffer.*/
+    size_t bufLen; /**<The actual size of the buffer used.*/
+    enum bigWigFile_type_enum type; /**<The connection type*/
+    int isCompressed; /**<1 if the file is compressed, otherwise 0*/
+    char *fname; /**<Only needed for remote connections. The original URL/filename requested.*/
+} ring_buffer_t;
+
+/**
+ * @brief ring cache structure
+ */
+class ring_cache
+{
+  public:
+
+    /**
+     * An enum type. 
+     * The documentation block cannot be put after the enum! 
+     */
+    enum EnumType
+    {
+      int EVal1,     /**< enum value 1 */
+      int EVal2      /**< enum value 2 */
+    };
+
+    /**
+     * a member function.
+     */
+    void member();
+    
+  protected:
+    int value;       /**< an integer value */
+};
+```
+
+### Case study: Python
+- https://www.stack.nl/~dimitri/doxygen/manual/docblocks.html#pythonblocks
+
+You have to use comments starting with ## and then the special command.
+```bash
+$ vi ./dragonfly.py
+##
+# "THE BEER-WARE LICENSE" (Revision 42):
+# <phk@FreeBSD.ORG> wrote this file.  As long as you retain this notice you
+# can do whatever you want with this stuff. If we meet some day, and you think
+# this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
+# 
+#
+
+## @package    dragonfly
+# @brief   A dragonfly driver.
+#
+# These empty function definitions are provided
+# so that stdio will build without complaining.
+# You will need to fill these functions in. This
+# is the implementation of the dragonfly device driver.
+# Important details about its implementation
+# should go in these comments.
+#
+# @date    1 Dec 2017
+# @param   [in] repeat number of times to do nothing
+# @retval  TRUE Successfully did nothing.
+# @retval  FALSE Oops, did something.
+# @bug     No know bugs.
+# @todo    Make it do something.
+#
+# Example Usage:
+# @code
+#   example_core(3); // Do nothing 3 times.
+# @endcode
+#
+
+## @brief The constructor.
+#  @param self The object pointer.
+def __init__(self):
+    self.__value = 0
+
+## @brief Stores a value.
+#  @param value The value to be stored.
+def setValue(self, value):
+    self.__value = value
+
+## @brief Gets stored value.
+#  @return The stored value.
+    def getValue(self):
+    return self.__value
+```
+
+### Case study: bash
+
+You have to use comments starting with ## and then the special command.
+Then, add @file and @brief tag to the top of each script file as follows.
+```bash
+$ vi pr-worker.sh
+##
+# "THE BEER-WARE LICENSE" (Revision 42):
+# <phk@FreeBSD.ORG> wrote this file.  As long as you retain this notice you
+# can do whatever you want with this stuff. If we meet some day, and you think
+# this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
+#
+
+## @file pr-worker.sh
+#  @brief function for Continuous Integration (CI)
+function work_core(){
+    . . . . . .
+}
+function work_gen(){
+    . . . . . .
+}
+work_core
+work_gen
+
+```
+
 Please, refer to http://www.stack.nl/~dimitri/doxygen/manual/commands.html for more details.
 
-How to generate bash scripts
------------------------------
+# How to generate the index page in HTML
+If the Doxygen tag @mainpage is placed in a comment block, the block is used to
+customize the index page (in HTML) or the first chapter (in $@mbox{@LaTeX}$).
+The title argument is optional and replaces the default title that doxygen
+normally generates. If you do not want any title you can specify notitle
+as the argument of @mainpage.
+
+Below is a simple example of a mainpage you can create yourself.
+
+```bash
+/**
+ *  @mainpage   Sintoburi
+ *  @section intro Introduction
+ *  - Introduction      :   Application repository for sintoburi solution
+ *  @section   Program  Program Name
+ *  - Program Name      :   Sintoburi
+ *  - Program Details   :   This includes a number of internal modules for market.
+ *  @section  INOUTPUT    Input/output data
+ *  - INPUT             :   None
+ *  - OUTPUT            :   None
+ *  @section  CREATEINFO    Code information
+ *  - Initial date      :   2018/06/14
+ *  - Version           :   0.1
+ */
+```
+# How to generate script code
 Refer to https://github.com/Anvil/bash-doxygen
-Doxygen does not support bash script files by default. Edit below lines in a Doxyfile.ci.
+Doxygen does not support bash script files by default.
+Edit below lines in a Doxyfile.ci to generate *.sh files.
 
 ```bash
 $ vi ./Doxyfile.ci
-FILE_PATTERNS = *.sh *.awk
-INPUT_FILTER = "sed -e 's|##|//!|'"
+# Set your shell script file names pattern as Doxygen inputs
+FILE_PATTERNS = *.sh *.php *.dragonfly
+ITAOST_FILTER = "sed -e 's|##|//!|'"
 FILTER_SOURCE_FILES = YES
+# Edit the Doxyfile to map shell files to C parser
+EXTENSION_MAPPING = sh=C
 ```
 
-Then, add a brief description to the top of each script file:
-```bash
-## @file pr-worker.php
-## @brief function for Continuous Integration (CI)
-```
-
-References
------------
+# References
   * Getting started: http://www.stack.nl/~dimitri/doxygen/manual/starting.html
   * Case study (Linux kernel): https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/kernel/sched/core.c?h=v4.13-rc1#n4454
+
