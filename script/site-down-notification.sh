@@ -17,7 +17,7 @@ subject="${website} - Website down."
 message="Ooops. Website is down on `date`."
 
 #toemail="leemgs@gmail.com"
-toemail="geunsik.lim@samsung.com"
+toemail="leemgs@gmail.com"
 fromemail="leemgs@gmail.com"
 smtpserver="smtp.gmail.com"
 port=587
