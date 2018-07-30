@@ -16,9 +16,10 @@ website="http://dclab.skku.ac.kr"
 subject="${website} - Website down."
 message="Ooops. Website is down on `date`."
 
-#toemail="leemgs@gmail.com"
-toemail="leemgs@gmail.com"
+toemail="leemgs@gmail.com zeteman2ya@gmail.com yieom@skku.edu"
 fromemail="leemgs@gmail.com"
+
+# google stmp account
 smtpserver="smtp.gmail.com"
 port=587
 username="leemgs@gmail.com"
@@ -38,7 +39,7 @@ function run_smtp_google(){
 # @brief Send e-mail with the SMTP protocol of a local server
 function run_smtp_local(){
     echo "Starting mail command..."
-    echo "$2" | mail -s "$1" "$3"
+    echo "$2" | mail -s "$1" -r "$fromemail" "$3"
 }
 
 # @brief Check dependant packages
@@ -58,7 +59,7 @@ function check_dependency() {
 # Main function
 echo "Checking site...";
 check_dependency curl
-check_dependency sendmail
+# check_dependency sendmail
 check_dependency mail
 
 if [[ $use_sendmail == 1 ]]; then
