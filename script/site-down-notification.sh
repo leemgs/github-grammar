@@ -1,4 +1,3 @@
-invain@mymate:~$ vi ./noti.sh
 #!/usr/bin/env bash
 
 # @brief A shell script to automatically test if a web site is available
@@ -12,8 +11,8 @@ invain@mymate:~$ vi ./noti.sh
 # @author: Geunsik Lim <leemgs@gmail.com>
 
 # --------------------------------- If needs, modify the below configuration setting ------
-website="www.websitetotest.com"
-# website="http://dclab.skku.ac.kr"
+# website="www.websitetotest.com"
+website="http://dclab.skku.ac.kr"
 subject="${website} - Website down."
 message="Ooops. Website is down on `date`."
 
