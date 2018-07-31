@@ -30,28 +30,28 @@ use_sendmail=0
 # --------------------------------- Do not edit the below statements ---------------------
 # Get the elements out of the array, use this syntax: "${websites[@]}" -- with the quotes
 for website in "${websites[@]}"; do
-    echo "-------------- $website ----------------------"
+    echo -e "-------------- $website ----------------------"
     subject="${website} - Website down."
-    message="Ooops. Website is down on `date`."
+    message="To ${toemail}\n\nOoops. Website is down on `date`.\n\nPlease, check your webserver status.\n\n From web-bot."
     
     # @brief Send e-mail with the SMTP protocol of a google account
     function run_smtp_google(){
-        echo "Starting sendmail command..."
+        echo -e "Starting sendmail command..."
         sendmail -f "$fromemail" -t "$3" -u "$1" -m "$2" -s \
         "$smtpserver:$port" -xu "$username" -xp "$password" -o tls=yes -q
     }
     
     # @brief Send e-mail with the SMTP protocol of a local server
     function run_smtp_local(){
-        echo "Starting mail command..."
-        echo "$2" | mail -s "$1" -r "$fromemail" "$3"
+        echo -e "Starting mail command..."
+        echo -e "$2" | mail -s "$1" -r "$fromemail" "$3"
     }
     
     # @brief Check dependant packages
     function check_dependency() {
-        echo "Checking for $1 command..."
+        echo -e "Checking for $1 command..."
         which "$1" 2>/dev/null || {
-            echo "Please install $1."
+            echo -e "Please install $1."
             exit 1
         }
     }
@@ -62,7 +62,7 @@ for website in "${websites[@]}"; do
     # -o flag to redirect output
     
     # Main function
-    echo "Checking site...";
+    echo -e "Checking site...";
     check_dependency curl
     # check_dependency sendmail
     check_dependency mail
@@ -73,4 +73,3 @@ for website in "${websites[@]}"; do
         curl ${website} -s -f -o /dev/null || run_smtp_local  "${subject}" "${message}" "${toemail}"
     fi
 done
-
