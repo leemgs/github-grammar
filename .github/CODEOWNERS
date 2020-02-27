@@ -4,4 +4,6 @@
 
 # Note that CODEOWNERS of github.com does not support @org-name/team-name,
 # even though it support @user-name format.
-/test/             @leemgs @hjoon0510 @myungjoo
+
+*                  @leemgs
+/test/             @leemgs @hjoon0510 
